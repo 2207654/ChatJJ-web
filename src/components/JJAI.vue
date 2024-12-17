@@ -100,8 +100,9 @@ onUnmounted(() => {
 const md = new MarkdownIt({
   highlight: (code, lang) => {
     const linesLength = code.split(/\n/).length - 1
-    const codeIndex =
-      parseInt(Date.now()) + Math.floor(Math.random() * 10000000)
+    const codeIndex = (
+      parseInt(Date.now().toString()) + Math.floor(Math.random() * 10000000)
+    ).toString()
 
     let html = `<button class="copy-btn" style="position: absolute;top: 0;right: 0;" type="button" data-clipboard-action="copy" data-clipboard-target="#copy${codeIndex}">复制</button>`
 
@@ -159,7 +160,9 @@ watch(
   () => {
     nextTick(() => {
       document.querySelectorAll('pre code').forEach(el => {
-        hljs.highlightElement(el)
+        if (el instanceof HTMLElement) {
+          hljs.highlightElement(el)
+        }
       })
       // 重新初始化 Clipboard
       if (clipboard) {
@@ -174,8 +177,7 @@ watch(
       })
     })
   },
-  { immediate: true },
-  { deep: true }
+  { immediate: true }
 )
 
 // 发送用户消息
