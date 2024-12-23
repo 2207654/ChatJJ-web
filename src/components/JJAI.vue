@@ -76,6 +76,7 @@ ws.onopen = function (e) {
 }
 
 onMounted(() => {
+  console.log('window', window)
   document.addEventListener('DOMContentLoaded', function () {
     // 初始化 Clipboard.js
     new Clipboard('.copy-btn')
